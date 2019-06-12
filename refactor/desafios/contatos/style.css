@@ -1,0 +1,47 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Calibri Light";
+}
+
+fieldset {
+    width: 500px;
+    padding: 15px;
+    border: 1px solid #000;
+}
+
+fieldset legend {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+fieldset > form > label,
+fieldset > form > textarea,
+fieldset > form > input {
+    width: 100%;
+}
+
+fieldset > form > label,
+fieldset > form > input,
+fieldset > form > button {
+    margin-top: 10px;
+}
+
+fieldset > form > button {
+    padding: 5px 15px;
+}
+
+label {
+    display: flex;
+}
+
+table {
+    width: 100%;
+}
+
+table th,
+table td {
+    border: 1px solid #518cff;
+}
