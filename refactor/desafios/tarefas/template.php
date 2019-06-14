@@ -22,22 +22,22 @@
             Descrição (Opcional): <textarea name="descricao" id="" cols="30" rows="10"></textarea>
         </label>
         <label for="prazo">
-            Prazo : <input type="text" name="prazo" />
+            Prazo : <input type="date" name="prazo" />
         </label>
         <fieldset>
             <legend>Prioridade: </legend>
             <label for="baixa">
-                <input type="radio" name="prioridade" id="baixa" value="baixa" checked /> Baixa
+                <input type="radio" name="prioridade" id="baixa" value="1" checked /> Baixa
             </label>
             <label for="media">
-                <input type="radio" name="prioridade" id="media" value="media" /> Média
+                <input type="radio" name="prioridade" id="media" value="2" /> Média
             </label>
             <label for="alta">
-                <input type="radio" name="prioridade" id="alta" value="alta" /> Alta
+                <input type="radio" name="prioridade" id="alta" value="3" /> Alta
             </label>
         </fieldset>
         <label for="concluida">
-            <input type="checkbox" name="concluida" id="concluida" value="sim" /> Concluída
+            <input type="checkbox" name="concluida" id="concluida" value="1" /> Concluída
         </label>
         <br>
         <button type="submit">Cadastrar</button>
@@ -57,11 +57,17 @@
     <tbody>
 		<?php foreach ($lista_tarefas as $tarefa): ?>
         <tr>
-            <td><?= $tarefa['nome'] ?></td>
-            <td><?= $tarefa['descricao'] ?></td>
-            <td><?= $tarefa['prazo'] ?></td>
-            <td><?= $tarefa['prioridade'] ?></td>
-            <td><?= $tarefa['concluida'] ?></td>
+            <td><?= $tarefa['nome']; ?></td>
+            <td><?= $tarefa['descricao']; ?></td>
+            <td>
+              <?= traduzDataParaExibir($tarefa['prazo']); ?>
+            </td>
+            <td>
+              <?= traduzPrioridade($tarefa['prioridade']); ?>
+            </td>
+            <td>
+              <?= traduzConcluida($tarefa['concluida']); ?>
+            </td>
         </tr>
 		<?php endforeach; ?>
     </tbody>
