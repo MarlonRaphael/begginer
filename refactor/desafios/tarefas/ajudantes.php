@@ -65,7 +65,7 @@ function traduzDataParaExibir($data)
 
 function traduzConcluida($concluida)
 {
-	if ($concluida == '') {
+	if ($concluida == 1) {
 		return 'Sim';
 	}
 	

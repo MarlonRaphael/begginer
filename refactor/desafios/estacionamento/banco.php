@@ -25,7 +25,7 @@ if (mysqli_connect_errno($conexao)) {
  * @param $conexao
  * @return array
  */
-function buscaTarefas($conexao)
+function buscaCarros($conexao)
 {
 	$sqlBusca = "SELECT * FROM tarefas";
 	$resultado = mysqli_query($conexao, $sqlBusca);
@@ -41,21 +41,9 @@ function buscaTarefas($conexao)
 
 /**
  * @param $conexao
- * @param $id
- * @return array|null
- */
-function buscaTarefa($conexao, $id)
-{
-	$sqlBusca = "SELECT * FROM tarefas WHERE id = {$id}";
-	$resultado = mysqli_query($conexao, $sqlBusca);
-	return mysqli_fetch_assoc($resultado);
-}
-
-/**
- * @param $conexao
  * @param $tarefa
  */
-function gravarTarefa($conexao, $tarefa)
+function gravarEntrada($conexao, $tarefa)
 {
 	try {
 		$sqlGravar = "
@@ -74,29 +62,4 @@ function gravarTarefa($conexao, $tarefa)
 	} catch (Exception $exception) {
 		return "{$exception->getLine()} - {$exception->getMessage()}";
 	}
-}
-
-/**
- * @param $conexao
- * @param $tarefa
- */
-function editarTarefa($conexao, $tarefa)
-{
-	$sqlEditar = "
-		UPDATE tarefas SET
-			nome = '{$tarefa['nome']}',
-			descricao = '{$tarefa['descricao']}',
-			prioridade = {$tarefa['prioridade']},
-			prazo = '{$tarefa['prazo']}',
-			concluida = {$tarefa['concluida']}
-		WHERE id = {$tarefa['id']}";
-	
-	mysqli_query($conexao, $sqlEditar);
-}
-
-function removerTarefa($conexao, $id)
-{
-	$sqlRemover = "DELETE FROM tarefas WHERE id = {$id}";
-	
-	mysqli_query($conexao, $sqlRemover);
 }

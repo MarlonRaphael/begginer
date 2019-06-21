@@ -12,65 +12,14 @@
 <body>
 
 <h1>Gerenciador de tarefas</h1>
-<fieldset>
-    <legend>Nova tarefa</legend>
-    <form action="">
-        <label for="nome">
-            Tarefa: <input type="text" name="nome" />
-        </label>
-        <label for="descricao">
-            Descrição (Opcional): <textarea name="descricao" id="" cols="30" rows="10"></textarea>
-        </label>
-        <label for="prazo">
-            Prazo : <input type="date" name="prazo" />
-        </label>
-        <fieldset>
-            <legend>Prioridade: </legend>
-            <label for="baixa">
-                <input type="radio" name="prioridade" id="baixa" value="1" checked /> Baixa
-            </label>
-            <label for="media">
-                <input type="radio" name="prioridade" id="media" value="2" /> Média
-            </label>
-            <label for="alta">
-                <input type="radio" name="prioridade" id="alta" value="3" /> Alta
-            </label>
-        </fieldset>
-        <label for="concluida">
-            <input type="checkbox" name="concluida" id="concluida" value="1" /> Concluída
-        </label>
-        <br>
-        <button type="submit">Cadastrar</button>
-    </form>
-</fieldset>
+
+<?php include ('formulario.php'); ?>
+
 <hr>
-<table>
-    <thead>
-    <tr>
-        <th>Tarefa</th>
-        <th>Descrição</th>
-        <th>Prazo</th>
-        <th>Prioridade</th>
-        <th>Concluída</th>
-    </tr>
-    </thead>
-    <tbody>
-		<?php foreach ($lista_tarefas as $tarefa): ?>
-        <tr>
-            <td><?= $tarefa['nome']; ?></td>
-            <td><?= $tarefa['descricao']; ?></td>
-            <td>
-              <?= traduzDataParaExibir($tarefa['prazo']); ?>
-            </td>
-            <td>
-              <?= traduzPrioridade($tarefa['prioridade']); ?>
-            </td>
-            <td>
-              <?= traduzConcluida($tarefa['concluida']); ?>
-            </td>
-        </tr>
-		<?php endforeach; ?>
-    </tbody>
-</table>
+
+<?php if ($exibir_tabela): ?>
+	<?php include ('tabela.php'); ?>
+<?php endif; ?>
+
 </body>
 </html>
