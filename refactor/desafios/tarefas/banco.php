@@ -94,9 +94,25 @@ function editarTarefa($conexao, $tarefa)
 	mysqli_query($conexao, $sqlEditar);
 }
 
+/**
+ * @param $conexao
+ * @param $id
+ */
 function removerTarefa($conexao, $id)
 {
 	$sqlRemover = "DELETE FROM tarefas WHERE id = {$id}";
 	
 	mysqli_query($conexao, $sqlRemover);
+}
+
+/**
+ * Limpar tarefas concluídas
+ */
+function limparTarefas($conexao)
+{
+	$sqlLimpar = "DELETE FROM tarefas WHERE concluida = 1";
+	
+	mysqli_query($conexao, $sqlLimpar);
+	
+	header('Location: tarefas.php');
 }

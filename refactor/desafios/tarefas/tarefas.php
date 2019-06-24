@@ -9,52 +9,43 @@ $exibir_tabela = true;
 
 if (isset($_GET['nome']) && $_GET['nome'] != '') {
 	
-	# Array tarefa
-	$tarefa = array();
+	include_once 'create_update.php';
 	
-	# Atribuindo nome
-	$tarefa['nome'] = $_GET['nome'];
-	
-	# Atribuindo descrição
-	if (isset($_GET['descricao'])) {
-		$tarefa['descricao'] = $_GET['descricao'];
+	if (isset($_GET['id']) && !empty($_GET['id'])) {
+		
+		# Atribuindo id
+		$tarefa['id'] = $_GET['id'];
+		
+		editarTarefa($conexao, $tarefa);
+		
 	} else {
-		$tarefa['descricao'] = '';
+		
+		gravarTarefa($conexao, $tarefa);
 	}
-	
-	# Atribuindo prazo
-	if (isset($_GET['prazo'])) {
-//		$tarefa['prazo'] = traduzDataHoraBanco($_GET['prazo']);
-		$tarefa['prazo'] = $_GET['prazo'];
-	} else {
-		$tarefa['prazo'] = '';
-	}
-	
-	# Atribuindo prioridade
-	$tarefa['prioridade'] = $_GET['prioridade'];
-	
-	# Atribuindo status
-	if (isset($_GET['concluida'])) {
-		$tarefa['concluida'] = 1;
-	} else {
-		$tarefa['concluida'] = 0;
-	}
-	
-	gravarTarefa($conexao, $tarefa);
 	
 	header('Location: tarefas.php');
 	
+	die;
+	
 }
 
-# Array de tarefas
-$lista_tarefas = buscaTarefas($conexao);
+if (isset($_GET['id']) && !empty($_GET['id'])) {
+	
+	$tarefa = buscaTarefa($conexao, $_GET['id']);
+	
+} else {
 
-$tarefa = [
-	'id' 					=> 0,
-	'nome' 				=> '',
-	'descricao' 	=> '',
-	'prioridade' 	=> 1,
-	'concluida' 	=> '',
-];
+# Array de tarefas
+	$lista_tarefas = buscaTarefas($conexao);
+	
+	$tarefa = [
+		'id' 					=> 0,
+		'nome' 				=> '',
+		'descricao' 	=> '',
+		'prioridade' 	=> 1,
+		'concluida' 	=> '',
+	];
+	
+}
 
 include "template.php";

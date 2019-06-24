@@ -43,13 +43,11 @@ if (isset($_GET['nome']) && $_GET['nome'] != '') {
 		$tarefa['concluida'] = 0;
 	}
 	
-	editarTarefa($conexao, $tarefa);
 	
 	header('Location: tarefas.php');
 	die;
 	
 }
 
-$tarefa = buscaTarefa($conexao, $_GET['id']);
 
 include "template.php";

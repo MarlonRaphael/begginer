@@ -1,5 +1,7 @@
 <fieldset>
-	<legend>Nova tarefa</legend>
+	<legend>
+      <?= ($tarefa['id'] > 0) ? 'Editar tarefa' : 'Nova tarefa'; ?>
+    </legend>
 	<form action="">
         <input type="hidden" name="id" value="<?= $tarefa['id']; ?>">
 		<label for="nome">
