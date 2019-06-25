@@ -5,47 +5,55 @@ session_start();
 include "banco.php";
 include "ajudantes.php";
 
-$exibir_tabela = true;
+$data = $_GET;
 
-if (isset($_GET['nome']) && $_GET['nome'] != '') {
-	
-	include_once 'create_update.php';
-	
-	if (isset($_GET['id']) && !empty($_GET['id'])) {
-		
-		# Atribuindo id
-		$tarefa['id'] = $_GET['id'];
-		
-		editarTarefa($conexao, $tarefa);
-		
-	} else {
-		
-		gravarTarefa($conexao, $tarefa);
-	}
-	
-	header('Location: tarefas.php');
-	
-	die;
-	
-}
-
-if (isset($_GET['id']) && !empty($_GET['id'])) {
-	
-	$tarefa = buscaTarefa($conexao, $_GET['id']);
-	
+if (isset($data['op']) && !empty($data['op'])) {
+	$op = $data['op'];
 } else {
-
-# Array de tarefas
-	$lista_tarefas = buscaTarefas($conexao);
-	
-	$tarefa = [
-		'id' 					=> 0,
-		'nome' 				=> '',
-		'descricao' 	=> '',
-		'prioridade' 	=> 1,
-		'concluida' 	=> '',
-	];
-	
+	$op = '';
 }
 
-include "template.php";
+$exibir_tabela = false;
+
+switch ($op) {
+	case 'add':
+		gravarTarefa($conexao, $data);
+		include "template.php";
+		break;
+	case 'edt':
+		$exibir_tabela = false;
+		$tarefa = buscaTarefa($conexao, $data['id']);
+		include "template.php";
+		break;
+	case 'upd':
+		$tarefa = getData($data);
+		editarTarefa($conexao, $tarefa);
+		break;
+	case 'cls':
+		limparTarefas($conexao);
+		break;
+	case 'del':
+		removerTarefa($conexao, $data['id']);
+		break;
+	case 'duplicar':
+		duplicarTarefa($conexao, $data['id']);
+		break;
+	default:
+		
+		$exibir_tabela = true;
+		
+		# Array de tarefas
+		$lista_tarefas = buscaTarefas($conexao);
+		
+		$tarefa = [
+			'id' => 0,
+			'nome' => '',
+			'descricao' => '',
+			'prioridade' => 1,
+			'concluida' => '',
+		];
+		
+		include "template.php";
+		
+		break;
+}

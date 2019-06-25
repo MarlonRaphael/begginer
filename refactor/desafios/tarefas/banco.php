@@ -82,7 +82,9 @@ function gravarTarefa($conexao, $tarefa)
  */
 function editarTarefa($conexao, $tarefa)
 {
-	$sqlEditar = "
+	if (isset($tarefa['id']) && !empty($tarefa['id'])) {
+		
+		$sqlEditar = "
 		UPDATE tarefas SET
 			nome = '{$tarefa['nome']}',
 			descricao = '{$tarefa['descricao']}',
@@ -90,8 +92,10 @@ function editarTarefa($conexao, $tarefa)
 			prazo = '{$tarefa['prazo']}',
 			concluida = {$tarefa['concluida']}
 		WHERE id = {$tarefa['id']}";
-	
-	mysqli_query($conexao, $sqlEditar);
+		
+		mysqli_query($conexao, $sqlEditar);
+	}
+	header('Location: tarefas.php');
 }
 
 /**
@@ -103,6 +107,10 @@ function removerTarefa($conexao, $id)
 	$sqlRemover = "DELETE FROM tarefas WHERE id = {$id}";
 	
 	mysqli_query($conexao, $sqlRemover);
+	
+	header('Location: tarefas.php');
+	
+	die;
 }
 
 /**
@@ -115,4 +123,85 @@ function limparTarefas($conexao)
 	mysqli_query($conexao, $sqlLimpar);
 	
 	header('Location: tarefas.php');
+}
+
+/**
+ * @param $conexao
+ * @param $data
+ */
+function duplicarTarefa($conexao, $id)
+{
+	if (isset($id) && !empty($id)) {
+		
+		$tarefa = buscaTarefa($conexao, $id);
+		
+		if (count($tarefa) > 0) {
+			
+			$sqlDuplicar = "INSERT INTO tarefas
+			(nome, descricao, prioridade, prazo, concluida)
+			VALUES (
+			'{$tarefa['nome']}',
+			'{$tarefa['descricao']}',
+			'{$tarefa['prioridade']}',
+			'{$tarefa['prazo']}',
+			'{$tarefa['concluida']}'
+		)";
+			
+			mysqli_query($conexao, $sqlDuplicar);
+			
+			header('Location: tarefas.php');
+		}
+	}
+}
+
+/**
+ * @param $data
+ * @return array
+ */
+function getData($data)
+{
+	$tarefa = array();
+	
+	# Atribuindo id
+	if (isset($data['id'])) {
+		$tarefa['id'] = $data['id'];
+	} else {
+		$tarefa['id'] = '';
+	}
+	
+	# Atribuindo nome
+	if (isset($data['nome'])) {
+		$tarefa['nome'] = $data['nome'];
+	} else {
+		$tarefa['nome'] = '';
+	}
+	
+	# Atribuindo descrição
+	if (isset($data['descricao'])) {
+		$tarefa['descricao'] = $data['descricao'];
+	} else {
+		$tarefa['descricao'] = '';
+	}
+	
+	# Atribuindo prazo
+	if (isset($data['prazo'])) {
+//		$data['prazo'] = traduzDataHoraBanco($_GET['prazo']);
+		$tarefa['prazo'] = $data['prazo'];
+	} else {
+		$tarefa['prazo'] = '';
+	}
+	
+	# Atribuindo prioridade
+	if (isset($data['prioridade'])) {
+		$tarefa['prioridade'] = $data['prioridade'];
+	}
+	
+	# Atribuindo status
+	if (isset($data['concluida'])) {
+		$tarefa['concluida'] = 1;
+	} else {
+		$tarefa['concluida'] = 0;
+	}
+	
+	return $tarefa;
 }

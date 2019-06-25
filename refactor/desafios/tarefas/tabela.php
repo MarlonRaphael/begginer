@@ -1,5 +1,5 @@
 <?php if (isset($lista_tarefas)): ?>
-    <a href="limpar_tarefas.php" role="button" style="margin: 50px;">
+    <a href="tarefas.php?op=cls" role="button" style="margin: 50px;">
         Limpar tarefas concluídas
     </a>
     <table>
@@ -10,7 +10,9 @@
             <th>Prazo</th>
             <th>Prioridade</th>
             <th>Concluída</th>
-            <th colspan="3">Opções</th>
+            <th colspan="3">
+                Opções
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -28,17 +30,17 @@
                   <?= traduzConcluida($tarefa['concluida']); ?>
                 </td>
                 <td>
-                    <a href="tarefas.php?id=<?= $tarefa['id']; ?>">
+                    <a href="tarefas.php?op=edt&id=<?= $tarefa['id']; ?>">
                         Editar
                     </a>
                 </td>
                 <td>
-                    <a href="remover.php?id=<?= $tarefa['id']; ?>">
+                    <a href="tarefas.php?op=del&id=<?= $tarefa['id']; ?>">
                         Remover
                     </a>
                 </td>
                 <td>
-                    <a href="duplicar.php?id=<?= $tarefa['id']; ?>">
+                    <a href="tarefas.php?op=duplicar&id=<?= $tarefa['id']; ?>">
                         Duplicar
                     </a>
                 </td>

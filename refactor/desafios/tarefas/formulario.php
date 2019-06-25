@@ -3,6 +3,7 @@
       <?= ($tarefa['id'] > 0) ? 'Editar tarefa' : 'Nova tarefa'; ?>
     </legend>
 	<form action="">
+        <?= (isset($tarefa['id']) ? '<input type="hidden" name="op" value="upd">' : ''); ?>
         <input type="hidden" name="id" value="<?= $tarefa['id']; ?>">
 		<label for="nome">
 			Tarefa: <input type="text" name="nome" value="<?= $tarefa['nome']; ?>" />
